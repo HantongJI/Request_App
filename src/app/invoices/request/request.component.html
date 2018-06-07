@@ -57,39 +57,33 @@
               </div>
             </div>
             <div class="bg-grey-whiter fc-blue-grey p-4 d-flex flex-wrap">
-              <div class="d-flex mb-3 m-lg-0" style="flex: 1">
-                <div class="px-3">
-                  <angular-blockies *ngIf="request.payee.address" [options]="{ seed: request.payee.address.toLowerCase() }" class="blockies" style="width: 50px; height: 50px;"></angular-blockies>
-                </div>
-                <div class="fs-14 lh-18">
-                  <div class="mb-1" [style.opacity]="'0.5'">FROM</div>
-                  <div class="semi-bold">ETH address</div>
-                  <div popover="{{request.payee.address}}" popoverPlacement="bottom" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true">{{request.payee.address.substring(0, 10)}}...{{request.payee.address.substring(32, 42)}}</div>
-                </div>
-              </div>
-              <div class="d-flex" style="flex: 1">
-                <div class="px-3">
-                  <angular-blockies *ngIf="request.payer" [options]="{ seed: request.payer.toLowerCase() }" class="blockies" style="width: 50px; height: 50px;"></angular-blockies>
-                </div>
-                <div class="fs-14 lh-18">
-                  <div class="mb-1" [style.opacity]="'0.5'">TO</div>
-                  <div class="semi-bold">ETH address</div>
-                  <div popover="{{request.payer}}" popoverPlacement="bottom" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true">{{request.payer.substring(0, 10)}}...{{request.payer.substring(32, 42)}}</div>
-                </div>
-              </div>
-            </div>
-            <div class="fc-blue-grey p-4" style="border-bottom: 1px solid #DFE5EC">
-              <div class="px-3" *ngFor="let data of objectKeys(request.data.data)" [hidden]="data == 'date'">
-                <div class="semi-bold">{{data}}</div>
-                <div>{{request.data.data[data]}}</div>
-              </div>
-            </div>
-            <div class="d-flex">
-              <div class="ml-auto d-inline-block semi-bold fc-primary px-5 py-3" style="background: #DFE5EC">
-                <div class="fs-14">AMOUNT</div>
-                <div class="fs-24">{{web3Service.fromWei(request.payee.expectedAmount.toString())}} ETH</div>
-              </div>
-            </div>
+                          <div class="d-flex mb-3 m-lg-0" style="flex: 1">
+                            <div class="px-3">
+                              <angular-blockies *ngIf="request.payee.address" [options]="{ seed: request.payee.address.toLowerCase() }" class="blockies" style="width: 50px; height: 50px;"></angular-blockies>
+                            </div>
+                            <div class="fs-14 lh-18">
+                              <div class="mb-1" [style.opacity]="'0.5'">FROM(PAYER)</div>
+                              <div class="semi-bold">ETH address</div>
+                              <div popover="{{request.payer}}" popoverPlacement="bottom" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true">{{request.payer.substring(0, 10)}}...{{request.payee.address.substring(32, 42)}}</div>
+                            </div>
+                          </div>
+                          <div class="d-flex" style="flex: 1">
+                            <div class="px-3">
+                              <angular-blockies *ngIf="request.payee.address" [options]="{ seed: request.payee.address.toLowerCase() }" class="blockies" style="width: 50px; height: 50px;"></angular-blockies>
+                            </div>
+                            <div class="fs-14 lh-18">
+                              <div class="mb-1" [style.opacity]="'0.5'">TO(PAYEE)</div>
+                              <div class="semi-bold">ETH address</div>
+                              <div popover="{{request.payee.address}}" popoverPlacement="bottom" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true">{{request.payee.address.substring(0, 10)}}...{{request.payer.substring(32, 42)}}</div>
+                            </div>
+                          </div>
+                        </div>
+            	    <div class="fc-blue-grey p-4" style="border-bottom: 1px solid #DFE5EC">
+                          <div class="px-3" *ngFor="let data of objectKeys(request.data.data)" [hidden]="data == 'date'">
+                            <div class="semi-bold">Total Price in EUR</div>
+                            <div>{{request.data.data[data]}}</div>
+                          </div>
+                        </div>
             <div class="p-5">
               <div *ngIf="request.status" class="fc-blue-grey fs-12 mx-auto w-50 text-center progress-bar-{{request.status.replace(' ','-')}}">
                 <div><strong>{{progress | number: '1.0-2'}}%</strong> of the request has been paid</div>

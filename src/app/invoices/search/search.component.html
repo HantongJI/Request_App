@@ -19,22 +19,22 @@
           <mat-cell *matCellDef="let req">{{ getAgeFromTimeStamp( req._meta.timestamp) }}</mat-cell>
         </ng-container>
         <!-- From Column -->
-        <ng-container matColumnDef="request.payee.address">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> From </mat-header-cell>
-          <mat-cell *matCellDef="let req">
-            <div *ngIf="req.request">
-              <a (click)="web3Service.setSearchValue(req.request.payee.address)" *ngIf="req.request.payee.address != searchValue; else payeeSpan" class="fc-accent">{{ req.request.payee.address.substring(0, 5) }}...{{req.request.payee.address.substring(37, 42) }}</a>
-              <ng-template #payeeSpan><span *ngIf="req.request">{{ req.request.payee.address.substring(0, 5) }}...{{req.request.payee.address.substring(37, 42) }}</span></ng-template>
-            </div>
-          </mat-cell>
-        </ng-container>
-        <!-- To Column -->
         <ng-container matColumnDef="request.payer">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> To </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> FROM (PAYER) </mat-header-cell>
           <mat-cell *matCellDef="let req">
             <div *ngIf="req.request">
               <a (click)="web3Service.setSearchValue(req.request.payer)" *ngIf="req.request.payer != searchValue; else payerSpan" class="fc-accent">{{ req.request.payer.substring(0, 5) }}...{{req.request.payer.substring(37, 42) }}</a>
               <ng-template #payerSpan><span *ngIf="req.request">{{ req.request.payer.substring(0, 5) }}...{{req.request.payer.substring(37, 42) }}</span></ng-template>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <!-- To Column -->
+        <ng-container matColumnDef="request.payee.address">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> TO (PAYEE) </mat-header-cell>
+          <mat-cell *matCellDef="let req">
+            <div *ngIf="req.request">
+              <a (click)="web3Service.setSearchValue(req.request.payee.address)" *ngIf="req.request.payee.address != searchValue; else payeeSpan" class="fc-accent">{{ req.request.payee.address.substring(0, 5) }}...{{req.request.payee.address.substring(37, 42) }}</a>
+              <ng-template #payeeSpan><span *ngIf="req.request">{{ req.request.payee.address.substring(0, 5) }}...{{req.request.payee.address.substring(37, 42) }}</span></ng-template>
             </div>
           </mat-cell>
         </ng-container>

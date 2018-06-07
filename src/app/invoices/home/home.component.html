@@ -24,6 +24,8 @@
             <h4 class="fs-18 semi-bold">New Request</h4>
             <div class="fs-14" [style.opacity]="'0.5'">
               <i>{{date | date: 'fullDate'}}</i>
+              <ul>the current price of ethereum in EUR is :</ul>
+              <ul>{{this.priceEUR}}</ul>
             </div>
           </div>
         </div>
@@ -52,25 +54,26 @@
               </mat-form-field> -->
             </div>
             <mat-form-field class="w-100">
-              <input matInput maxlength="42" placeholder="Payer's ETH address" [formControl]="payerFormControl">
-              <mat-error *ngIf="payerFormControl.hasError('required')">
-                payer's ETH address is <strong>required</strong>
+              <input matInput maxlength="42" placeholder="Payee's ETH address" [formControl]="payeeFormControl"><!--0x00502dd61ed5a5b54803cc3ff656a44fbea8131a-->
+              <mat-error *ngIf="payeeFormControl.hasError('required')">
+                payee's ETH address is <strong>required</strong>
               </mat-error>
-              <mat-error *ngIf="payerFormControl.hasError('pattern')">
+              <mat-error *ngIf="payeeFormControl.hasError('pattern')">
                 ETH address format <strong>not valid</strong>
               </mat-error>
-              <mat-error *ngIf="payerFormControl.hasError('sameAddressAsPayee')">
-                payer's address must be <strong>different from yours</strong>
+              <mat-error *ngIf="payeeFormControl.hasError('sameAddressAsPayer')">
+                payee's address must be <strong>different from yours</strong>
               </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-100" hintLabel="Max 256 characters">
-              <input matInput maxlength="256" placeholder="Reason (optional)" [formControl]="reasonFormControl">
-              <mat-hint align="end">{{reasonFormControl?.value.length || 0}}/256</mat-hint>
+
+            <mat-form-field class="w-100" hintLabel="Request Price in EUR">
+                <input matInput readonly=true value="€ {{(this.priceEUR*this.expectedAmountFormControl.value)}}" [formControl]="reasonFormControl">
+              <!--mat-hint align="end">{{reasonFormControl?.value.length || 0}}/256</mat-hi       [formControl]="reasonFormControl"-->
             </mat-form-field>
+
           </div>
           <mat-toolbar class="p-0 bbr-7 cta-toolbar" [style.height]="'60px'">
-            <div></div>
-            <button class="fs-18" mat-raised-button color="accent" type="submit" [disabled]="requestForm.controls.expectedAmount.touched && requestForm.controls.payer.touched && !requestForm.valid">Create a Request&nbsp;
+            <button class="fs-18" mat-raised-button color="accent" type="submit" [disabled]="requestForm.controls.expectedAmount.touched && requestForm.controls.payee.touched && !requestForm.valid">Create a Request&nbsp;
               <i *ngIf="createLoading" class="fa fa-circle-o-notch fa-spin"></i>
             </button>
           </mat-toolbar>

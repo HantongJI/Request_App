@@ -28,7 +28,6 @@ export class RequestComponent implements OnInit, OnDestroy {
   timerInterval: any;
   loading = false;
 
-
   constructor(public web3Service: Web3Service, private route: ActivatedRoute, private dialog: MatDialog) {}
 
 
@@ -62,6 +61,7 @@ export class RequestComponent implements OnInit, OnDestroy {
       const request = await this.web3Service.getRequestByRequestId(this.searchValue);
       this.setRequest(request);
     }, 7500);
+
   }
 
   async watchTxHash(txHash) {
@@ -137,7 +137,8 @@ export class RequestComponent implements OnInit, OnDestroy {
     }
     this.request = request;
     this.getRequestMode();
-    if (request && request.payee) { this.progress = 100 * this.request.payee.balance / this.request.payee.expectedAmount; }
+    if (request && request.payee) { this.progress = 100 * this.request.payee.balance / this.request.payee.expectedAmount;
+    }
   }
 
 
@@ -178,7 +179,6 @@ export class RequestComponent implements OnInit, OnDestroy {
     setTimeout(() => { this.copyUrlTxt = 'Copy url & share'; }, 500);
   }
 
-
   refresh() {
     location.reload();
   }
@@ -210,10 +210,6 @@ export class RequestComponent implements OnInit, OnDestroy {
         this.callbackTx(response, 'The request is being cancelled. Please wait a few moments for it to appear on the Blockchain.');
       }).then(
         response => {
-          // setTimeout(_ => {
-          //   this.loading = false;
-          //   this.web3Service.openSnackBar('Request successfully cancelled.', 'Ok', 'success-snackbar');
-          // }, 5000);
         }, err => {
           this.callbackTx(err);
         }
@@ -227,10 +223,6 @@ export class RequestComponent implements OnInit, OnDestroy {
         this.callbackTx(response, 'The request is being accepted. Please wait a few moments for it to appear on the Blockchain.');
       }).then(
         response => {
-          // setTimeout(_ => {
-          //   this.loading = false;
-          //   this.web3Service.openSnackBar('Request successfully accepted.', 'Ok', 'success-snackbar');
-          // }, 5000);
         }, err => {
           this.callbackTx(err);
         });
@@ -252,10 +244,6 @@ export class RequestComponent implements OnInit, OnDestroy {
               this.callbackTx(response, 'Subtract in progress. Please wait a few moments for it to appear on the Blockchain.');
             }).then(
               response => {
-                // setTimeout(_ => {
-                //   this.loading = false;
-                //   this.web3Service.openSnackBar('Subtract done.', 'Ok', 'success-snackbar');
-                // }, 5000);
               }, err => {
                 this.callbackTx(err);
               });
@@ -279,10 +267,6 @@ export class RequestComponent implements OnInit, OnDestroy {
               this.callbackTx(response, 'Additional in progress. Please wait a few moments for it to appear on the Blockchain.');
             }).then(
               response => {
-                // setTimeout(_ => {
-                //   this.loading = false;
-                //   this.web3Service.openSnackBar('Additional done.', 'Ok', 'success-snackbar');
-                // }, 5000);
               }, err => {
                 this.callbackTx(err);
               });
@@ -306,10 +290,6 @@ export class RequestComponent implements OnInit, OnDestroy {
               this.callbackTx(response, 'Payment is being done. Please wait a few moments for it to appear on the Blockchain.');
             }).then(
               response => {
-                // setTimeout(_ => {
-                //   this.loading = false;
-                //   this.web3Service.openSnackBar('Payment done.', 'Ok', 'success-snackbar');
-                // }, 5000);
               }, err => {
                 this.callbackTx(err);
               });
@@ -333,16 +313,14 @@ export class RequestComponent implements OnInit, OnDestroy {
               this.callbackTx(response, 'Refund in progress. Please wait a few moments for it to appear on the Blockchain.');
             }).then(
               response => {
-                // setTimeout(_ => {
-                //   this.loading = false;
-                //   this.web3Service.openSnackBar('Refund done.', 'Ok', 'success-snackbar');
-                // }, 5000);
               }, err => {
                 this.callbackTx(err);
               });
         }
       });
   }
+
+
 
 
   ngOnDestroy() {

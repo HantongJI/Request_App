@@ -5,7 +5,18 @@
       <small><i class="fa fa-search" aria-hidden="true"></i></small>
     </button>
     <mat-placeholder>
-      <small>Search by Request ID / ETH address</small>
+      <small>Search Request by Request ID / ETH address</small>
+    </mat-placeholder>
+  </mat-form-field>
+</form>
+<form [formGroup]="searchTransForm" (ngSubmit)="searchTrans(searchTransFormControl.value)">
+  <mat-form-field class="mx-3 searchBar">
+    <input matInput type="text" formControlName="searchTransFormControl">
+    <button type="submit" matSuffix mat-icon-button [disabled]="!searchTransFormControl.value">
+      <small><i class="fa fa-search" aria-hidden="true"></i></small>
+    </button>
+    <mat-placeholder>
+      <small>Search For Facture by Transaction</small>
     </mat-placeholder>
   </mat-form-field>
 </form>

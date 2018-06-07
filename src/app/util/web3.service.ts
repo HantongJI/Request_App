@@ -32,6 +32,7 @@ export class Web3Service {
   public accountObservable = new BehaviorSubject < string > (null);
   public networkIdObservable = new BehaviorSubject < number > (null);
   public searchValue = new Subject < string > ();
+  public searchTrans = new Subject < string > ();
 
   private web3NotReadyMsg = 'Error when trying to instanciate web3.';
   private requestNetworkNotReadyMsg = 'Request Network smart contracts are not deployed on this network. Please use Mainnet or Rinkeby Testnet.';
@@ -199,6 +200,9 @@ export class Web3Service {
     this.searchValue.next(searchValue);
   }
 
+  public setSearchTrans(searchTrans: string) {
+    this.searchTrans.next(searchTrans);
+  }
 
   public setRequestStatus(request) {
     if (request.state === 2) {
@@ -226,12 +230,12 @@ export class Web3Service {
   }
 
 
-  public createRequestAsPayee(payer: string, expectedAmount: string, data: string, callback ? ) {
+  public createRequestAsPayer(payee: string, expectedAmount: string, data: string, callback ? ) {
     if (this.watchDog()) { return callback(); }
-    if (!this.web3.utils.isAddress(payer)) { return callback({ message: 'payer\'s address is not a valid Ethereum address' }); }
+    if (!this.web3.utils.isAddress(payee)) { return callback({ message: 'payee\'s address is not a valid Ethereum address' }); }
     const expectedAmountInWei = this.toWei(expectedAmount);
     this.confirmTxOnLedgerMsg();
-    return this.requestNetwork.requestEthereumService.createRequestAsPayee([this.accountObservable.value], [expectedAmountInWei], payer, null, null, data);
+    return this.requestNetwork.requestEthereumService.createRequestAsPayer([payee], [expectedAmountInWei], this.accountObservable.value, null, null, data);
   }
 
 
@@ -292,7 +296,20 @@ export class Web3Service {
     }
   }
 
+/*
+  public async getCoreContractByRequestId(requestId: string) {
+    try {
+      const contract = await this.requestNetwork.requestCoreService.getCoreContractFromRequestId(requestId);
+      //this.setRequestStatus(request);
+      return contract;
+    } catch (err) {
+      console.log('Error: ', err.message);
+      return err;
+    }
+  }
+*/
 
+  //@return  promise of the object containing the request and the transaction
   public async getRequestByTransactionHash(txHash: string) {
     try {
       const response = await this.requestNetwork.requestCoreService.getRequestByTransactionHash(txHash);

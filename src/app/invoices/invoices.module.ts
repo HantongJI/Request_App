@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { RequestComponent } from './request/request.component';
 import { SearchComponent } from './search/search.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { Facture } from './facture/facture.component';
+
 
 import { ClipboardModule } from 'ngx-clipboard';
 
@@ -17,7 +19,7 @@ import { ClipboardModule } from 'ngx-clipboard';
     SharedModule,
 
     ClipboardModule,
-   
+
     InvoicesRoutingModule
   ],
   declarations: [
@@ -25,7 +27,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     HomeComponent,
     RequestComponent,
     SearchComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    Facture
   ]
 })
 export class InvoicesModule {}

@@ -1,0 +1,70 @@
+
+<div class="container fc-primary">
+  <div>
+    <div class="col-12" *ngIf="!request; else resultBlock">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+    <ng-template #resultBlock>
+      <div class="col-12 text-center" *ngIf="!request.payee || !request.payee.expectedAmount; else requestBlock">
+        <img class="mx-auto" src="assets/img/searching.png" style="max-width: 120px;">
+        <h1 class="my-3">Oops</h1>
+        <div *ngIf="request.errorTxHash; else errorRequestIdBlock" class="">
+          <p>{{ request.errorTxHash }}</p>
+          <p><a style="opacity: 0.8; color: #5392ff !important;" href="{{web3Service.etherscanUrl}}tx/{{txHash}}" target="_blank"><i>{{ web3Service.etherscanUrl}}tx/{{txHash.substring(0, 10) }}...{{ txHash.substring(txHash.length-5, txHash.length) }}</i></a></p>
+          <div>
+            <button mat-raised-button routerLink="/" class="mx-3 px-5 my-5" color="accent">Back home</button>
+            <button mat-raised-button (click)="refresh()" class="mx-3 px-5 my-5" color="accent">Try again</button>
+          </div>
+        </div>
+        <ng-template #errorRequestIdBlock>
+          <p>Sorry, we couldn’t find any matches for this request Id.</p>
+          <p>Please try searching with another ID.</p>
+          <button mat-raised-button routerLink="/" style="text-decoration: none" class="px-5 my-5" color="accent">Back home</button>
+        </ng-template>
+      </div>
+      <ng-template #requestBlock>
+        <div id = "facture">
+          <div style = "display: grid; grid: 75px / auto auto auto; grid-gap: 10px; padding: 10px;">
+            <div><h1>iExec Blockchain Tech</h1></div>
+            <div></div>
+            <div><h2 style="color:Grey;">{{date}}</h2></div>
+          </div>
+          <hr style = "border-top: 2px; solid: #617B9F; opacity: 3;">
+          <div class="col-md-12 column">
+              <div>iExec Blockchain Tech</div>
+              <div>Adresse : 15 Rue des Cuirassiers 69003 Lyon, France</div>
+              <div>SIRET : 82307092500016</div>
+              <div>Mail: contact@iex.ec</div>
+              <br>
+              <div>{{fact}}</div>
+          </div>
+          <hr style = "border-top: 2px; solid: #617B9F; opacity: 3;">
+          <div class="col-md-12 column">
+              <div id = "payee">Bénéficiaire : {{request.payee.address}}</div>
+          </div>
+          <hr style = "border-top: 2px; solid: #617B9F; opacity: 3;">
+          <div class="col-md-12 column" *ngFor="let data of objectKeys(request.data.data)" [hidden]="data == 'date'">
+            <div>Méthode de paiement : ETH</div>
+            <div id="transaction">Transaction No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{trans}}</div>
+            <div id="price">Prix ETH/EUR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{((request.data.data[data].substring(2).trim())/web3Service.fromWei(request.payee.expectedAmount)).toString()}} euros</div>
+          </div>
+          <hr style = "border-top: 2px; solid: #617B9F; opacity: 3;">
+          <div style = "display: grid; grid-template-columns: auto auto auto auto; grid-gap: 1px;padding: 10px">
+            <div><h4>Quantité</h4></div>
+            <div><h4>Item #</h4></div>
+            <div><h4>Prix unitaire (€)</h4></div>
+            <div><h4>Total (€)</h4></div>
+            <div><p id="quantity"></p></div>
+            <div><p id="item">ETH</p></div>
+            <div class="centered" *ngFor="let data of objectKeys(request.data.data)" [hidden]="data == 'date'">
+              <p id="rate">{{((request.data.data[data].substring(2).trim())/web3Service.fromWei(request.payee.expectedAmount)).toString()}}</p>
+            </div>
+            <div><p id="total"></p></div>
+          </div>
+          <div style = "position: fixed;; bottom: 10px;">* TVA non applicable: Cour Européenne de Justice Directive 2006/112/EC - Articles 2(1)(c) et 135(1)(d) à (f)</div>
+        </div>
+        <button style = "position: absolute; right: 150px;" mat-raised-button (click)="printPage()" class="mx-3 px-5 my-5" color="accent" id = "printPageButton">Print</button>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>
